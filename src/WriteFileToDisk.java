@@ -15,9 +15,9 @@ import java.util.Set;
  */
 public class WriteFileToDisk {
 	/*
-	 * Summary:		Takes a set of file urls and writes them to given location
+	 * Summary:	Takes a set of file urls and writes them to given location
 	 * Parameters:	Set of file urls, String where to write these files
-	 * Return:		Void, files on disk
+	 * Return:	Void, files on disk
 	 */
 	public static void writeFileToDisk(Set<String> data, String location) {
 		for (String	url : data) {
@@ -34,7 +34,7 @@ public class WriteFileToDisk {
 	}
 	
 	/*
-	 * Summary:		Write file to disk
+	 * Summary:	Write file to disk
 	 * Parameters:	String url to file, String where to write file
 	 */
 	public static void saveFile(String link, String location)
@@ -43,7 +43,7 @@ public class WriteFileToDisk {
 			
 			URL url;
 			InputStream is;
-			try{								//it failed to download some images from delfi.ee
+			try{					//it failed to download some images from delfi.ee
 				url = new URL(link);	
 				is = url.openStream();
 			}catch (MalformedURLException e) {	//so try to add http: before url
@@ -75,17 +75,17 @@ public class WriteFileToDisk {
 	}
 	
 	/*
-	 * Summary:		Get file name and type from given url
-	 * 				http:/www.xxx.com/yyy/.../filename.type
-	 * 				or http:/www.xxx.com/yyy/.../filename.type?itok=aaaa
+	 * Summary:	Get file name and type from given url
+	 * 		http:/www.xxx.com/yyy/.../filename.type
+	 * 		or http:/www.xxx.com/yyy/.../filename.type?itok=aaaa
 	 * Parameters:	String url of file
-	 * Return: 		String name of file
+	 * Return: 	String name of file
 	 */
 	public static String fileName(String url) {
 		int index = url.lastIndexOf("/") + 1;	// file name from url after last /
 		
 		String name = url.substring(index);
-		try {									// some files have ? and info after .filetype, we don't need that
+		try {					// some files have ? and info after .filetype, we don't need that
 			int indexOfQuestionmark = url.indexOf("?");
 			name = url.substring(index, indexOfQuestionmark);
 		} catch (StringIndexOutOfBoundsException e) {
@@ -95,16 +95,17 @@ public class WriteFileToDisk {
 	}
 	
 	/*
-	 * Summary:		Download test file and throw FileNotFoundException if fail
-	 * 				Delete test file
+	 * Summary:	Download test file and throw FileNotFoundException if fail
+	 * 		Delete test file
 	 * Parameters:	String of location
+	 * Return:	Void
 	 */
 	public static void testLocation(String location)
 			throws FileNotFoundException {
 		saveFile("http://i.imgur.com/Ff1t8GV.png", location
 				+ "WriteToDiskTest.png");
 		Path path = Paths.get(location + "WriteToDiskTest.png");
-		try {					//try to delete test file
+		try {			//try to delete test file
 			Files.delete(path);
 		} catch (IOException e) {
 			e.printStackTrace();
