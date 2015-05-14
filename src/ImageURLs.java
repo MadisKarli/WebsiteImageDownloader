@@ -13,9 +13,9 @@ import java.util.Set;
  */
 public class ImageURLs {
 	/*
-	 * Summary:		Gets HTML from site and then finds all links for pictures from <img src=picture 
+	 * Summary:	Gets HTML from site and then finds all links for pictures from <img src=picture 
 	 * Parameters:	String url of site
-	 * Return:		Set of locations
+	 * Return:	Set of locations
 	 */
 	public static Set<String> getImageLocationSet(String site) {
 		//Set<String> data = getImageLocationsFromSite(site);
@@ -24,9 +24,9 @@ public class ImageURLs {
 		return data1;
 	}
 	/*
-	 * Summary:		Connects to url and returns HTML
+	 * Summary:	Connects to url and returns HTML
 	 * Parameters:	String url of site
-	 * Return:		String of site HTML
+	 * Return:	String of site HTML
 	 */
 	private static String getHtmlString(String site) {
 		Set<String> locations = new HashSet<String>();
@@ -57,35 +57,35 @@ public class ImageURLs {
 		return sb.toString();
 	}
 	/*
-	 * Summary:		Gets  HTML code and finds url from <img src="link"
+	 * Summary:	Gets  HTML code and finds url from <img src="link"
 	 * Parameters:	String HTML
-	 * Return:		Set of image locations
+	 * Return:	Set of image locations
 	 */
 	private static Set<String> getImageLinksFromHtmlString(String html){
 		Set<String> links = new HashSet<String>();
 		html = html.replaceAll("\\s+","");
 		while(true){
 			if (html.toLowerCase().contains("<img")) {			// find img tag
-				int fromImg = html.indexOf("<img");				// split line from img tag to avoid false src-s
+				int fromImg = html.indexOf("<img");			// split line from img tag to avoid false src-s
 				html = html.substring(fromImg);
 				if (html.toLowerCase().contains("src=")) {		// get String containing location
 					int firstIndex = html.indexOf("src=") + 5;	// for that find string between first src= and last "
 					String tmp = html.substring(firstIndex);
 					int lastIndex = tmp.indexOf("\"");
 					String ImageUrl = tmp.substring(0, lastIndex);
-					html = html.substring(lastIndex);			// remove used code from HTML
+					html = html.substring(lastIndex);		// remove used code from HTML
 					links.add(ImageUrl);
 				}
 			}else{
-			break;												// end when no more <img tags
+			break;								// end when no more <img tags
 			}
 		}
 		return links;
 	}
 	
 	/*
-	 * Summary:		Try to establish connection to url, throw IOException when not successful
-	 * 				Delete test file
+	 * Summary:	Try to establish connection to url, throw IOException when not successful
+	 * 		Delete test file
 	 * Parameters:	String of url
 	 */
 	public static void testURL(String url) throws IOException{
@@ -99,9 +99,9 @@ public class ImageURLs {
 	//FROM NOW ON CODE TO DEAL WITH HTML ONE LINE AT A TIME
 	//NOT IN USE
 	/*
-	 * Summary:		Connects to HTML site and calls getImageLocationFromLine with each line
+	 * Summary:	Connects to HTML site and calls getImageLocationFromLine with each line
 	 * Parameters:	String url of site
-	 * Return:		Set of locations
+	 * Return:	Set of locations
 	 */
 	private static Set<String> getImageLocationsFromSite(String site) {
 		Set<String> locations = new HashSet<String>();
@@ -131,22 +131,18 @@ public class ImageURLs {
 	}
 	
 	/*
-	 * Summary:		Gets one line from HTML code and finds url from src="link"
+	 * Summary:	Gets one line from HTML code and finds url from src="link"
 	 * Parameters:	String line from HTML
-	 * Return:		String url of image
+	 * Return:	String url of image
 	 */
 	private static String getImageLocationFromLine(String line) {
 		line = line.replaceAll("\\s+","");
-		// find img tag
-		if (line.toLowerCase().contains("<img")) {
-			// split line from img tag to avoid false src-s
-			int fromImg = line.indexOf("<img");
+		if (line.toLowerCase().contains("<img")) {		// find img tag
+			int fromImg = line.indexOf("<img");		// split line from img tag to avoid false src-s
 			line = line.substring(fromImg);
-			if (line.toLowerCase().contains("src=")) {
-				// get String containing location
-				// for that find string between first src= and last "
+			if (line.toLowerCase().contains("src=")) {	// get String containing location
 				int firstIndex = line.indexOf("src=") + 5;
-				String tmp = line.substring(firstIndex);
+				String tmp = line.substring(firstIndex); // for that find string between first src= and last "
 				int lastIndex = tmp.indexOf("\"");
 				String ImageUrl = tmp.substring(0, lastIndex);
 				return ImageUrl;
@@ -154,7 +150,4 @@ public class ImageURLs {
 		}
 		return null;
 	}
-
-
-	
 }
